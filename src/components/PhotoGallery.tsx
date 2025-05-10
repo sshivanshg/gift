@@ -82,8 +82,8 @@ const TimelineItem = styled(motion.div)(({ theme }) => ({
 
 const PhotoImage = styled('img')({
   width: '100%',
-  height: '100%',
-  objectFit: 'cover',
+  height: 'auto',
+  objectFit: 'contain',
   transition: 'transform 0.5s ease',
   WebkitUserSelect: 'none',
   userSelect: 'none',
@@ -113,16 +113,29 @@ const PhotoGallery: React.FC = () => {
             padding: '20px',
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
           }}>
-            <PhotoImage
-              src={photo.src}
-              alt={photo.caption}
-              style={{ 
-                maxHeight: isMobile ? '200px' : '300px', 
-                width: 'auto',
-                borderRadius: '8px',
-                marginBottom: '16px',
-              }}
-            />
+            <Box sx={{
+              width: '100%',
+              maxHeight: isMobile ? '300px' : '400px',
+              overflow: 'hidden',
+              borderRadius: '8px',
+              marginBottom: '16px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.05)'
+            }}>
+              <PhotoImage
+                src={photo.src}
+                alt={photo.caption}
+                style={{ 
+                  maxWidth: '100%',
+                  maxHeight: isMobile ? '300px' : '400px',
+                  width: 'auto',
+                  height: 'auto',
+                  objectFit: 'contain'
+                }}
+              />
+            </Box>
             <Typography 
               variant={isMobile ? "h6" : "h5"} 
               sx={{ 
