@@ -6,31 +6,31 @@ import { styled } from '@mui/material/styles';
 const photos = [
   {
     src: '/photos/IMG_20210401_101446.jpg',
-    caption: 'Our First Memory Together',
+    caption: 'Nani <3 ',
     date: 'April 1, 2021',
     filter: 'none'
   },
   {
     src: '/photos/IMG_20220706_105023.jpg',
-    caption: 'A Special Day',
+    caption: 'maa sii',
     date: 'July 6, 2022',
     filter: 'none'
   },
   {
     src: '/photos/IMG-20220707-WA0034.jpg',
-    caption: 'Beautiful Moments',
+    caption: 'Gorgeous',
     date: 'July 7, 2022',
     filter: 'none'
   },
   {
     src: '/photos/IMG-20220319-WA0019.jpg',
-    caption: 'Cherished Memories',
+    caption: 'Hehehehe',
     date: 'March 19, 2022',
     filter: 'none'
   },
   {
     src: '/photos/IMG_20230811_154252.jpg',
-    caption: 'Latest Memory',
+    caption: 'Pyaari mumma <3',
     date: 'August 11, 2023',
     filter: 'none'
   },
