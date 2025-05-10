@@ -4,6 +4,7 @@ import { CssBaseline, Box, Container, Typography, Button } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 import PhotoGallery from './components/PhotoGallery';
+import Confetti from 'react-confetti';
 
 const theme = createTheme({
   palette: {
@@ -21,34 +22,6 @@ const theme = createTheme({
     fontFamily: '"Dancing Script", cursive, "Roboto", "Helvetica", "Arial", sans-serif',
   },
 });
-
-// Confetti component
-const Confetti: React.FC<{ show: boolean }> = ({ show }) => {
-  if (!show) return null;
-  const confettiColors = ['#FF69B4', '#FF1493', '#FFD1DC', '#FFF0F5', '#FFB6C1'];
-  const confettiPieces = Array.from({ length: 80 });
-  return (
-    <div className="confetti">
-      {confettiPieces.map((_, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: `${Math.random() * 100}vw`,
-            top: `${Math.random() * 100}vh`,
-            width: 10 + Math.random() * 8,
-            height: 10 + Math.random() * 8,
-            backgroundColor: confettiColors[Math.floor(Math.random() * confettiColors.length)],
-            borderRadius: '50%',
-            opacity: 0.7 + Math.random() * 0.3,
-            transform: `rotate(${Math.random() * 360}deg)`,
-            animation: `floatHeart 2.5s linear ${Math.random() * 2}s 1 forwards`,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 // Floating hearts background
 const FloatingHearts: React.FC = () => {
@@ -154,54 +127,29 @@ const GiftBox: React.FC<{ revealed: boolean; onReveal: () => void }> = ({ reveal
   );
 };
 
+const sections = [
+  {
+    title: "Happy Mother's Day!",
+    content: "To the most amazing mother in the world...",
+    color: "#FF69B4"
+  },
+  {
+    title: "Our Beautiful Memories",
+    content: "Swipe through our special moments together...",
+    color: "#FF69B4",
+    component: <PhotoGallery />
+  }
+];
+
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [giftRevealed, setGiftRevealed] = useState(false);
-  const sections = [
-    {
-      title: "Happy Mother's Day!",
-      content: "To the most amazing mom in the world...",
-      color: "#FF69B4",
-    },
-    {
-      title: "Thank You For Everything",
-      content: "Your love, care, and support mean the world to me.",
-      color: "#FF1493",
-    },
-    {
-      title: "You're My Hero",
-      content: "Every day, you inspire me to be better.",
-      color: "#FF69B4",
-    },
-    {
-      title: "Our Beautiful Memories",
-      content: "Swipe through our special moments together...",
-      color: "#FFD1DC",
-      component: <PhotoGallery />,
-    },
-    {
-      title: "A Special Surprise!",
-      content: "Click below to reveal your gift!",
-      color: "#FFD1DC",
-    },
-  ];
-
-  useEffect(() => {
-    if (currentSection === sections.length - 1) {
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
-    }
-  }, [currentSection, sections.length]);
-
-  const nextSection = () => {
-    if (currentSection === sections.length - 1) return;
-    setCurrentSection((prev) => (prev + 1) % sections.length);
-    setGiftRevealed(false);
-  };
 
   const handleGiftReveal = () => {
     setGiftRevealed(true);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 5000);
   };
 
   return (
@@ -210,85 +158,77 @@ const App: React.FC = () => {
       <Box
         sx={{
           minHeight: '100vh',
-          background: 'linear-gradient(45deg, #FFF0F5 30%, #FFE4E1 90%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 3,
+          background: 'linear-gradient(45deg, #FFB6C1 30%, #FFC0CB 90%)',
+          py: 4,
           position: 'relative',
           overflow: 'hidden',
         }}
       >
         <FloatingHearts />
-        <Confetti show={showConfetti} />
+        {showConfetti && <Confetti />}
         <Container maxWidth="md">
           <AnimatePresence mode="wait">
-            <>
-              <motion.div
-                key={currentSection}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Box
-                  sx={{
-                    textAlign: 'center',
-                    padding: 4,
-                    borderRadius: 4,
-                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            <motion.div
+              key={currentSection}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Box sx={{ 
+                textAlign: 'center', 
+                color: 'white',
+                py: 4
+              }}>
+                <Typography 
+                  variant="h2" 
+                  component="h1" 
+                  sx={{ 
+                    mb: 2,
+                    fontWeight: 'bold',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
                   }}
                 >
-                  <div className="bounce-heart">♥</div>
-                  <Typography
-                    variant="h2"
-                    component={motion.h2}
+                  {sections[currentSection].title}
+                </Typography>
+                
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    mb: 4,
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
+                  }}
+                >
+                  {sections[currentSection].content}
+                </Typography>
+
+                {sections[currentSection].component}
+
+                {currentSection < sections.length - 1 && (
+                  <Button
+                    variant="contained"
+                    onClick={() => setCurrentSection(prev => prev + 1)}
                     sx={{
-                      color: sections[currentSection].color,
-                      marginBottom: 3,
-                      fontWeight: 'bold',
+                      mt: 4,
+                      backgroundColor: 'white',
+                      color: '#FF69B4',
+                      px: 4,
+                      py: 1.5,
+                      borderRadius: '25px',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        backgroundColor: '#FFE4E1',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
+                      },
                     }}
                   >
-                    <AnimatedText text={sections[currentSection].title} />
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    component={motion.p}
-                    sx={{
-                      color: '#666',
-                      marginBottom: 4,
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {sections[currentSection].content}
-                  </Typography>
-                  {sections[currentSection].component}
-                  {currentSection === sections.length - 1 ? (
-                    <GiftBox revealed={giftRevealed} onReveal={handleGiftReveal} />
-                  ) : (
-                    <Button
-                      variant="contained"
-                      onClick={nextSection}
-                      className="pulse-button neon-glow"
-                      sx={{
-                        backgroundColor: sections[currentSection].color,
-                        '&:hover': {
-                          backgroundColor: sections[currentSection].color,
-                          opacity: 0.9,
-                        },
-                        padding: '12px 30px',
-                        borderRadius: '30px',
-                        fontSize: '1.1rem',
-                      }}
-                    >
-                      Next Message
-                    </Button>
-                  )}
-                </Box>
-              </motion.div>
-            </>
+                    Continue
+                  </Button>
+                )}
+              </Box>
+            </motion.div>
           </AnimatePresence>
         </Container>
       </Box>
