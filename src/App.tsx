@@ -55,24 +55,72 @@ const sections = [
     component: <PhotoGallery />
   },
   {
-    title: "From Nanu",
+    title: "From All Of Us",
     content: "",
-    color: "#FF69B4"
-  },
-  {
-    title: "From Aadu",
-    content: "",
-    color: "#FF69B4"
-  },
-  {
-    title: "From Arnav",
-    content: "",
-    color: "#FF69B4"
-  },
-  {
-    title: "From Shivu",
-    content: "",
-    color: "#FF69B4"
+    color: "#FF69B4",
+    component: (
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: 2,
+        alignItems: 'center'
+      }}>
+        <Typography 
+          variant="h4" 
+          sx={{ 
+            color: '#FF69B4',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mb: 3
+          }}
+        >
+          From:
+        </Typography>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            color: '#FF69B4',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mb: 2
+          }}
+        >
+          Nanu
+        </Typography>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            color: '#FF69B4',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mb: 2
+          }}
+        >
+          Aadu
+        </Typography>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            color: '#FF69B4',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mb: 2
+          }}
+        >
+          Arnav
+        </Typography>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            color: '#FF69B4',
+            fontWeight: 'bold',
+            textAlign: 'center'
+          }}
+        >
+          Shivu
+        </Typography>
+      </Box>
+    )
   }
 ];
 
